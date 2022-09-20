@@ -61,14 +61,14 @@ let snakehead = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . 3 3 3 3 3 3 3 3 3 3 
     . . . . . . 3 3 3 3 3 3 3 3 3 3 
+    . . . . . . 3 3 f f f f f f f f 
+    . . . . . . 3 3 f f 3 3 3 3 f f 
+    . . . . . . 3 f 3 3 3 3 3 3 3 3 
+    . . . . . . f 3 3 3 f 3 3 f 3 3 
     . . . . . . 3 3 3 3 3 3 3 3 3 3 
     . . . . . . 3 3 3 3 3 3 3 3 3 3 
-    . . . . . . 3 3 3 3 3 3 3 3 3 3 
-    . . . . . . 3 3 3 3 3 3 3 3 3 3 
-    . . . . . . 3 3 3 3 3 3 3 3 3 3 
-    . . . . . . 3 3 3 3 3 3 3 3 3 3 
-    . . . . . . 3 3 3 3 3 3 3 3 3 3 
-    . . . . . . 3 3 3 3 3 3 3 3 3 3 
+    . . . . . . 3 f f 3 f f 3 f 3 f 
+    . . . . . . f 3 3 f 3 3 f 3 f 3 
     `, SpriteKind.Player)
 let snakefood = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -77,16 +77,16 @@ let snakefood = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
-    . . . . . . 2 2 2 2 2 2 2 2 2 2 
+    . . . . . . 3 3 3 3 3 f 3 3 3 3 
+    . . . . . . 3 3 3 3 3 3 3 3 3 3 
+    . . . . . . 3 3 3 3 3 f 3 3 3 3 
+    . . . . . . 3 f 3 f 3 3 3 f 3 f 
+    . . . . . . 3 3 3 3 f 3 f 3 3 3 
+    . . . . . . 3 3 3 3 3 f 3 3 3 3 
+    . . . . . . 3 3 3 3 f 3 f 3 3 3 
+    . . . . . . 3 3 f f 3 3 3 f f 3 
+    . . . . . . 3 3 f 3 f 3 f 3 f 3 
+    . . . . . . 3 3 3 3 3 f 3 3 3 3 
     `, SpriteKind.Food)
 foodx = 80
 foody = 60
@@ -125,8 +125,11 @@ game.onUpdate(function () {
 })
 game.onUpdate(function () {
     for (let value of snakebody) {
-        if (!(value == snakebody[0]) && snakehead.overlapsWith(value)) {
+        if (!(value == snakebody[1]) && !(value == snakebody[0]) && snakehead.overlapsWith(value)) {
             game.over(false)
         }
+    }
+    if (snakeheadx < 0 || (snakeheadx > 160 || (snakeheady < 0 || snakeheady > 120))) {
+        game.over(false)
     }
 })
